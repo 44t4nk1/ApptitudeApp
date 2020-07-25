@@ -17,22 +17,16 @@ class _CanvasPaintingState extends State<CanvasPainting> {
   double opacity = 1.0;
   StrokeCap strokeType = StrokeCap.round;
   double strokeWidth = 3.0;
-  Color selectedColor = Colors.black;
+  Color selectedColor = Colors.white;
 
   Future<void> _pickStroke() async {
-    //Shows AlertDialog
     return showDialog<void>(
       context: context,
-
-      //Dismiss alert dialog when set true
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
-        //Clips its child in a oval shape
         return ClipOval(
           child: AlertDialog(
-            //Creates three buttons to pick stroke value.
             actions: <Widget>[
-              //Resetting to default stroke value
               FlatButton(
                 child: Icon(
                   Icons.clear,
@@ -132,252 +126,137 @@ class _CanvasPaintingState extends State<CanvasPainting> {
     );
   }
 
-  Future<void> _save() async {
-    RenderRepaintBoundary boundary =
-        globalKey.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage();
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
-    print(pngBytes);
-  }
-
-  List<Widget> fabOption() {
-    return <Widget>[
-      IconButton(
-        color: Color(0xffe63946),
-        icon: Icon(Icons.save),
-        tooltip: 'Save',
-        onPressed: () {
-          setState(() {
-            _save();
-          });
-        },
-      ),
-      IconButton(
-        color: Color(0xffe63946),
-        icon: Icon(Icons.brush),
-        tooltip: 'Stroke',
-        onPressed: () {
-          //min: 0, max: 50
-          setState(() {
-            _pickStroke();
-          });
-        },
-      ),
-      IconButton(
-        color: Color(0xffe63946),
-        icon: Icon(Icons.opacity),
-        tooltip: 'Opacity',
-        onPressed: () {
-          //min:0, max:1
-          setState(() {
-            _opacity();
-          });
-        },
-      ),
-      IconButton(
-        color: Color(0xffe63946),
-        icon: Icon(Icons.clear),
-        tooltip: "Erase",
-        onPressed: () {
-          setState(
-            () {
-              points.clear();
-            },
-          );
-        },
-      ),
-      FloatingActionButton(
-        backgroundColor: Colors.white,
-        heroTag: "color_red",
-        child: colorMenuItem(Colors.red),
-        tooltip: 'Color',
-        onPressed: () {
-          setState(() {
-            selectedColor = Colors.red;
-          });
-        },
-      ),
-      FloatingActionButton(
-        backgroundColor: Colors.white,
-        heroTag: "color_green",
-        child: colorMenuItem(Colors.green),
-        tooltip: 'Color',
-        onPressed: () {
-          setState(() {
-            selectedColor = Colors.green;
-          });
-        },
-      ),
-      FloatingActionButton(
-        backgroundColor: Colors.white,
-        heroTag: "color_pink",
-        child: colorMenuItem(Colors.pink),
-        tooltip: 'Color',
-        onPressed: () {
-          setState(() {
-            selectedColor = Colors.pink;
-          });
-        },
-      ),
-      FloatingActionButton(
-        backgroundColor: Colors.white,
-        heroTag: "color_blue",
-        child: colorMenuItem(Colors.blue),
-        tooltip: 'Color',
-        onPressed: () {
-          setState(() {
-            selectedColor = Colors.blue;
-          });
-        },
-      ),
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.black,
-        body: Column(
-          children: [
-            SizedBox(
-              height: 100,
-            ),
-            Row(
-              children: [
-                IconButton(
-                  color: Color(0xffe63946),
-                  icon: Icon(Icons.save),
-                  tooltip: 'Save',
-                  onPressed: () {
-                    setState(() {
-                      _save();
-                    });
-                  },
+        body: GestureDetector(
+          onPanUpdate: (details) {
+            setState(() {
+              RenderBox renderBox = context.findRenderObject();
+              points.add(TouchPoints(
+                  points: renderBox.globalToLocal(details.globalPosition),
+                  paint: Paint()
+                    ..strokeCap = strokeType
+                    ..isAntiAlias = true
+                    ..color = selectedColor.withOpacity(opacity)
+                    ..strokeWidth = strokeWidth));
+            });
+          },
+          onPanStart: (details) {
+            setState(() {
+              RenderBox renderBox = context.findRenderObject();
+              points.add(TouchPoints(
+                  points: renderBox.globalToLocal(details.globalPosition),
+                  paint: Paint()
+                    ..strokeCap = strokeType
+                    ..isAntiAlias = true
+                    ..color = selectedColor.withOpacity(opacity)
+                    ..strokeWidth = strokeWidth));
+            });
+          },
+          onPanEnd: (details) {
+            setState(() {
+              points.add(null);
+            });
+          },
+          child: RepaintBoundary(
+            key: globalKey,
+            child: Stack(
+              children: <Widget>[
+                CustomPaint(
+                  size: Size.infinite,
+                  painter: MyPainter(
+                    pointsList: points,
+                  ),
                 ),
-                IconButton(
-                  color: Color(0xffe63946),
-                  icon: Icon(Icons.brush),
-                  tooltip: 'Stroke',
-                  onPressed: () {
-                    //min: 0, max: 50
-                    setState(() {
-                      _pickStroke();
-                    });
-                  },
-                ),
-                IconButton(
-                  color: Color(0xffe63946),
-                  icon: Icon(Icons.opacity),
-                  tooltip: 'Opacity',
-                  onPressed: () {
-                    //min:0, max:1
-                    setState(() {
-                      _opacity();
-                    });
-                  },
-                ),
-                IconButton(
-                  color: Color(0xffe63946),
-                  icon: Icon(Icons.clear),
-                  tooltip: "Erase",
-                  onPressed: () {
-                    setState(
-                      () {
-                        points.clear();
-                      },
-                    );
-                  },
-                ),
-                IconButton(
-                  color: Colors.red,
-                  icon: colorMenuItem(Colors.red),
-                  tooltip: 'Color',
-                  onPressed: () {
-                    setState(() {
-                      selectedColor = Colors.red;
-                    });
-                  },
-                ),
-                IconButton(
-                  color: Colors.green,
-                  icon: colorMenuItem(Colors.green),
-                  tooltip: 'Color',
-                  onPressed: () {
-                    setState(() {
-                      selectedColor = Colors.green;
-                    });
-                  },
-                ),
-                IconButton(
-                  color: Colors.pink,
-                  icon: colorMenuItem(Colors.pink),
-                  tooltip: 'Color',
-                  onPressed: () {
-                    setState(() {
-                      selectedColor = Colors.pink;
-                    });
-                  },
-                ),
-                IconButton(
-                  color: Colors.blue,
-                  icon: colorMenuItem(Colors.blue),
-                  tooltip: 'Color',
-                  onPressed: () {
-                    setState(() {
-                      selectedColor = Colors.blue;
-                    });
-                  },
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 50),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        color: Color(0xffe63946),
+                        icon: Icon(Icons.brush),
+                        tooltip: 'Stroke',
+                        onPressed: () {
+                          setState(() {
+                            _pickStroke();
+                          });
+                        },
+                      ),
+                      IconButton(
+                        color: Color(0xffe63946),
+                        icon: Icon(Icons.opacity),
+                        tooltip: 'Opacity',
+                        onPressed: () {
+                          setState(() {
+                            _opacity();
+                          });
+                        },
+                      ),
+                      IconButton(
+                        color: Color(0xffe63946),
+                        icon: Icon(Icons.clear),
+                        tooltip: "Erase",
+                        onPressed: () {
+                          setState(
+                            () {
+                              points.clear();
+                            },
+                          );
+                        },
+                      ),
+                      IconButton(
+                        color: Colors.red,
+                        icon: colorMenuItem(Colors.red),
+                        tooltip: 'Color',
+                        onPressed: () {
+                          setState(() {
+                            selectedColor = Colors.red;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        color: Colors.green,
+                        icon: colorMenuItem(Colors.green),
+                        tooltip: 'Color',
+                        onPressed: () {
+                          setState(() {
+                            selectedColor = Colors.green;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        color: Colors.pink,
+                        icon: colorMenuItem(Colors.pink),
+                        tooltip: 'Color',
+                        onPressed: () {
+                          setState(() {
+                            selectedColor = Colors.pink;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        color: Colors.blue,
+                        icon: colorMenuItem(Colors.blue),
+                        tooltip: 'Color',
+                        onPressed: () {
+                          setState(() {
+                            selectedColor = Colors.blue;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            GestureDetector(
-              onPanUpdate: (details) {
-                setState(() {
-                  RenderBox renderBox = context.findRenderObject();
-                  points.add(TouchPoints(
-                      points: renderBox.globalToLocal(details.globalPosition),
-                      paint: Paint()
-                        ..strokeCap = strokeType
-                        ..isAntiAlias = true
-                        ..color = selectedColor.withOpacity(opacity)
-                        ..strokeWidth = strokeWidth));
-                });
-              },
-              onPanStart: (details) {
-                setState(() {
-                  RenderBox renderBox = context.findRenderObject();
-                  points.add(TouchPoints(
-                      points: renderBox.globalToLocal(details.globalPosition),
-                      paint: Paint()
-                        ..strokeCap = strokeType
-                        ..isAntiAlias = true
-                        ..color = selectedColor.withOpacity(opacity)
-                        ..strokeWidth = strokeWidth));
-                });
-              },
-              onPanEnd: (details) {
-                setState(() {
-                  points.add(null);
-                });
-              },
-              child: RepaintBoundary(
-                key: globalKey,
-                child: Stack(
-                  children: <Widget>[
-                    CustomPaint(
-                      size: Size.square(400),
-                      painter: MyPainter(
-                        pointsList: points,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
