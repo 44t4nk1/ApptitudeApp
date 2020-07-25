@@ -26,10 +26,12 @@ class _CanvasPaintingState extends State<CanvasPainting> {
       builder: (BuildContext context) {
         return ClipOval(
           child: AlertDialog(
+            backgroundColor: Colors.black,
             actions: <Widget>[
               FlatButton(
                 child: Icon(
                   Icons.clear,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   strokeWidth = 3.0;
@@ -40,6 +42,7 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                 child: Icon(
                   Icons.brush,
                   size: 24,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   strokeWidth = 10.0;
@@ -50,6 +53,7 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                 child: Icon(
                   Icons.brush,
                   size: 40,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   strokeWidth = 30.0;
@@ -60,6 +64,7 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                 child: Icon(
                   Icons.brush,
                   size: 60,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   strokeWidth = 50.0;
@@ -74,23 +79,29 @@ class _CanvasPaintingState extends State<CanvasPainting> {
   }
 
   Future<void> _opacity() async {
-    //Shows AlertDialog
     return showDialog<void>(
       context: context,
-
-      //Dismiss alert dialog when set true
       barrierDismissible: true,
-
       builder: (BuildContext context) {
-        //Clips its child in a oval shape
         return ClipOval(
           child: AlertDialog(
-            //Creates three buttons to pick opacity value.
+            backgroundColor: Colors.black,
             actions: <Widget>[
+              FlatButton(
+                child: Icon(
+                  Icons.clear,
+                  color: Color(0xffe63946),
+                ),
+                onPressed: () {
+                  opacity = 1.0;
+                  Navigator.of(context).pop();
+                },
+              ),
               FlatButton(
                 child: Icon(
                   Icons.opacity,
                   size: 24,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   //most transparent
@@ -102,6 +113,7 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                 child: Icon(
                   Icons.opacity,
                   size: 40,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   opacity = 0.5;
@@ -112,6 +124,7 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                 child: Icon(
                   Icons.opacity,
                   size: 60,
+                  color: Color(0xffe63946),
                 ),
                 onPressed: () {
                   //not transparent at all.
@@ -173,10 +186,11 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                   ),
                 ),
                 Container(
+                  color: Colors.black,
                   height: 50,
                   width: double.infinity,
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 50),
+                  margin: EdgeInsets.only(top: 50, left: 40),
                   child: Row(
                     children: [
                       IconButton(
