@@ -1,3 +1,4 @@
+import 'package:ApptitudeApp/particleScreen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,7 +12,7 @@ class _HomePageState extends State<HomePage> {
   List pages = [
     Center(
       child: Text('Page1'),
-    ),
+    ), //CircularParticleScreen(),
     Center(
       child: Text('Page2'),
     ),
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
           children: [
             Container(
+              margin: EdgeInsets.only(left: 16, top: 40, right: 16),
               width: double.infinity,
               height: 200,
               child: DrawerHeader(
@@ -54,25 +56,28 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   color: Color(0xfff1faee),
                 ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             FlatButton(
               child: Container(
+                margin: EdgeInsets.only(left: 2, right: 2),
                 width: double.infinity,
-                height: 50,
+                height: 70,
                 decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                   color: Color(0xfff1faee),
                 ),
                 child: Center(
                   child: Text(
-                    'Home Page',
+                    'About Us',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -87,7 +92,69 @@ class _HomePageState extends State<HomePage> {
                 });
                 Navigator.pop(context);
               },
-            )
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FlatButton(
+              child: Container(
+                margin: EdgeInsets.only(left: 2, right: 2),
+                width: double.infinity,
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: Color(0xfff1faee),
+                ),
+                child: Center(
+                  child: Text(
+                    'Second Page',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xffe63946),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 1;
+                });
+                Navigator.pop(context);
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FlatButton(
+              child: Container(
+                margin: EdgeInsets.only(left: 2, right: 2),
+                width: double.infinity,
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: Color(0xfff1faee),
+                ),
+                child: Center(
+                  child: Text(
+                    'Draw',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xffe63946),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 2;
+                });
+                Navigator.pop(context);
+              },
+            ),
           ],
         )
             /*ListView(
