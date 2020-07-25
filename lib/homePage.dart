@@ -1,4 +1,3 @@
-import 'package:ApptitudeApp/particleScreen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,23 +9,71 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   List pages = [
-    Center(
-      child: Text('Page1'),
-    ), //CircularParticleScreen(),
-    Center(
-      child: Text('Page2'),
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Page1',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
     ),
-    Center(
-      child: Text('Page3'),
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Page2',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
     ),
-    Center(
-      child: Text('Page4'),
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Page3',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
     ),
-    Center(
-      child: Text('Page5'),
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Page4',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
     ),
-    Center(
-      child: Text('Page6'),
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Page5',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ),
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Page6',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
     ),
   ];
 
@@ -35,9 +82,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: Theme(
         data: Theme.of(context).copyWith(
-          // Set the transparency here
-          canvasColor: Colors
-              .transparent, //or any other color you want. e.g Colors.blue.withOpacity(0.5)
+          canvasColor: Color(
+              0xff000000), //or any other color you want. e.g Colors.blue.withOpacity(0.5)
         ),
         child: Drawer(
             child: Column(
@@ -46,7 +92,9 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.only(left: 16, top: 40, right: 16),
               width: double.infinity,
               height: 200,
-              child: DrawerHeader(
+              child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
                 child: Text(
                   'Carry Vai',
                   style: TextStyle(
@@ -55,11 +103,11 @@ class _HomePageState extends State<HomePage> {
                     color: Color(0xffe63946),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Color(0xffe63946)),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Color(0xfff1faee),
-                ),
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(width: 2, color: Color(0xffe63946)),
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                color: Color(0xff00000),
               ),
             ),
             SizedBox(
@@ -73,7 +121,8 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Color(0xffe63946)),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                  color: Color(0xfff1faee),
+                  color:
+                      _currentIndex == 0 ? Color(0xffe63946) : Color(0xff00000),
                 ),
                 child: Center(
                   child: Text(
@@ -81,7 +130,9 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xffe63946),
+                      color: _currentIndex == 0
+                          ? Color(0xff000000)
+                          : Color(0xffe63946),
                     ),
                   ),
                 ),
@@ -104,15 +155,18 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Color(0xffe63946)),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                  color: Color(0xfff1faee),
+                  color:
+                      _currentIndex == 1 ? Color(0xffe63946) : Color(0xff00000),
                 ),
                 child: Center(
                   child: Text(
-                    'Second Page',
+                    'Image Fetcher',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xffe63946),
+                      color: _currentIndex == 1
+                          ? Color(0xff000000)
+                          : Color(0xffe63946),
                     ),
                   ),
                 ),
@@ -135,7 +189,8 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Color(0xffe63946)),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                  color: Color(0xfff1faee),
+                  color:
+                      _currentIndex == 2 ? Color(0xffe63946) : Color(0xff00000),
                 ),
                 child: Center(
                   child: Text(
@@ -143,7 +198,9 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xffe63946),
+                      color: _currentIndex == 2
+                          ? Color(0xff000000)
+                          : Color(0xffe63946),
                     ),
                   ),
                 ),
@@ -154,6 +211,111 @@ class _HomePageState extends State<HomePage> {
                 });
                 Navigator.pop(context);
               },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FlatButton(
+              child: Container(
+                margin: EdgeInsets.only(left: 2, right: 2),
+                width: double.infinity,
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color:
+                      _currentIndex == 3 ? Color(0xffe63946) : Color(0xff00000),
+                ),
+                child: Center(
+                  child: Text(
+                    'Fourth',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: _currentIndex == 3
+                          ? Color(0xff000000)
+                          : Color(0xffe63946),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 3;
+                });
+                Navigator.pop(context);
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FlatButton(
+              child: Container(
+                margin: EdgeInsets.only(left: 2, right: 2),
+                width: double.infinity,
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color:
+                      _currentIndex == 4 ? Color(0xffe63946) : Color(0xff00000),
+                ),
+                child: Center(
+                  child: Text(
+                    'Fifth',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: _currentIndex == 4
+                          ? Color(0xff000000)
+                          : Color(0xffe63946),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 4;
+                });
+                Navigator.pop(context);
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FlatButton(
+              child: Container(
+                margin: EdgeInsets.only(left: 2, right: 2),
+                width: double.infinity,
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xffe63946)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color:
+                      _currentIndex == 5 ? Color(0xffe63946) : Color(0xff00000),
+                ),
+                child: Center(
+                  child: Text(
+                    'Sixth',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: _currentIndex == 5
+                          ? Color(0xff000000)
+                          : Color(0xffe63946),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 5;
+                });
+                Navigator.pop(context);
+              },
+            ),
+            SizedBox(
+              height: 10,
             ),
           ],
         )
