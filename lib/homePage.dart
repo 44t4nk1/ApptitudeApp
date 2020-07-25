@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     ),
-    Draw(),
+    CanvasPainting(),
     Scaffold(
       backgroundColor: Colors.black,
       body: Center(
