@@ -1,7 +1,5 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
-
-import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -11,7 +9,17 @@ class CanvasPainting extends StatefulWidget {
 }
 
 class _CanvasPaintingState extends State<CanvasPainting> {
+  int randomNumber = 0;
+
+  void initState() {
+    Random random = new Random();
+    randomNumber = random.nextInt(images.length);
+    super.initState();
+  }
+
   GlobalKey globalKey = GlobalKey();
+
+  List images = ['rose.png', 'dab.png', 'sad.png', 'house.png'];
 
   List<TouchPoints> points = List();
   double opacity = 1.0;
@@ -179,6 +187,13 @@ class _CanvasPaintingState extends State<CanvasPainting> {
             key: globalKey,
             child: Stack(
               children: <Widget>[
+                Center(
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset("assets/images/${images[randomNumber]}"),
+                    height: 400,
+                  ),
+                ),
                 CustomPaint(
                   size: Size.infinite,
                   painter: MyPainter(
@@ -186,11 +201,15 @@ class _CanvasPaintingState extends State<CanvasPainting> {
                   ),
                 ),
                 Container(
-                  color: Colors.black,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2, color: Color(0xffe63946)),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: Colors.black,
+                  ),
                   height: 50,
                   width: double.infinity,
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 50, left: 40),
+                  margin: EdgeInsets.only(top: 50, left: 35, right: 35),
                   child: Row(
                     children: [
                       IconButton(
